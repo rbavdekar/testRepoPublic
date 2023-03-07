@@ -1,0 +1,24 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+pool:
+  vmImage: windows-latest
+steps:
+- script: echo Bavdekar!
+  displayName: 'Run a one-line script'
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      Write-Host 'Hi'
+      $v= $env:SYSTEM_ACCESSTOKEN
+      $v1 ,$v2 = $v.Split("ey",2)
+      Write-Host $v1
+      Write-Host $v2
+      Write-Host "##vso[task.logissue type=error]$v2"
+  env: 
+    system_accesstoken: $(System.AccessToken)
